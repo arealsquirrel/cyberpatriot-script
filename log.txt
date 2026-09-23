@@ -28,3 +28,85 @@ sudo: apt: command not found
 [!] Command failed with return code 1
 sudo: ufw: command not found
 [!] Command failed with return code 1
+'Name: faillock
+
+ Default: no
+
+ Priority: 0
+
+Auth-Type: Additional
+
+Auth:
+
+	required	pam_faillock.so authsucc' >> faillock
+
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+ClamAV update process started at Wed Sep 23 12:14:05 2026
+
+daily.cvd database is up-to-date (version: 28132, sigs: 355666, f-level: 90, builder: svc.clamav-publisher)
+
+main.cvd database is up-to-date (version: 63, sigs: 3287027, f-level: 90, builder: tomjudge)
+
+bytecode.cvd database is up-to-date (version: 339, sigs: 80, f-level: 90, builder: nrandolp)
+
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+ClamAV update process started at Wed Sep 23 12:14:31 2026
+
+daily.cvd database is up-to-date (version: 28132, sigs: 355666, f-level: 90, builder: svc.clamav-publisher)
+
+main.cvd database is up-to-date (version: 63, sigs: 3287027, f-level: 90, builder: tomjudge)
+
+bytecode.cvd database is up-to-date (version: 339, sigs: 80, f-level: 90, builder: nrandolp)
+
+sed: can't read /etc/lightdm/lightdm.conf: No such file or directory
+[!] Command failed with return code 2
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+ClamAV update process started at Wed Sep 23 12:17:19 2026
+
+daily.cvd database is up-to-date (version: 28132, sigs: 355666, f-level: 90, builder: svc.clamav-publisher)
+
+main.cvd database is up-to-date (version: 63, sigs: 3287027, f-level: 90, builder: tomjudge)
+
+bytecode.cvd database is up-to-date (version: 339, sigs: 80, f-level: 90, builder: nrandolp)
+
+sed: can't read /etc/lightdm/lightdm.conf: No such file or directory
+[!] Command failed with return code 2
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+ClamAV update process started at Wed Sep 23 12:18:07 2026
+
+daily.cvd database is up-to-date (version: 28132, sigs: 355666, f-level: 90, builder: svc.clamav-publisher)
+
+main.cvd database is up-to-date (version: 63, sigs: 3287027, f-level: 90, builder: tomjudge)
+
+bytecode.cvd database is up-to-date (version: 339, sigs: 80, f-level: 90, builder: nrandolp)
+
+sed: can't read /etc/lightdm/lightdm.conf: No such file or directory
+[!] Command failed with return code 2

@@ -1,0 +1,6 @@
+Name: Reset lockout on success
+Default: no
+Priority: 0
+Auth-Type: Additional
+Auth:
+    required pam_faillock.so authsucc
