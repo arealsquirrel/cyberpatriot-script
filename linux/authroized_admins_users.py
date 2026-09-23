@@ -285,8 +285,3 @@ def authorized_admins_users(context):
     #admin_present = [u for u in system_users if u in accounts.admins]
     #non_admin_present = [u for u in system_users if u in accounts.users]
     #reconcile_sudo_access(admin_present, non_admin_present, args.apply)
-
-
-
-if __name__ == "__main__":
-    main()
