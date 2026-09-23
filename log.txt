@@ -6,7 +6,25 @@ sudo: apt-get: command not found
 [!] Command failed with return code 1
 sudo: apt-get: command not found
 [!] Command failed with return code 1
-ClamAV update process started at Wed Sep 23 10:47:37 2026
+ClamAV update process started at Wed Sep 23 11:37:00 2026
+
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+sudo: apt-get: command not found
+[!] Command failed with return code 1
+ClamAV update process started at Wed Sep 23 11:37:16 2026
+
 daily.cvd database is up-to-date (version: 28132, sigs: 355666, f-level: 90, builder: svc.clamav-publisher)
+
 main.cvd database is up-to-date (version: 63, sigs: 3287027, f-level: 90, builder: tomjudge)
+
 bytecode.cvd database is up-to-date (version: 339, sigs: 80, f-level: 90, builder: nrandolp)
+
+sudo: apt: command not found
+[!] Command failed with return code 1
+sudo: ufw: command not found
+[!] Command failed with return code 1

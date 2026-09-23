@@ -3,9 +3,9 @@ from run_command import run_command
 
 def setup_linux():
     with open("log.txt", "a") as file:
-        run_command(["sudo", "passwd", "-l", "root"])
-        run_command(["sudo", "chmod", "640", "/etc/shadow"])
-        run_command(["sudo", "chmod", "640", "/etc/gshadow"])
+        #run_command(["sudo", "passwd", "-l", "root"])
+        #run_command(["sudo", "chmod", "640", "/etc/shadow"])
+        #run_command(["sudo", "chmod", "640", "/etc/gshadow"])
 
         if "y" in input("system upgrade [y/n]"):
             run_command(["sudo", "apt-get", "update"])
