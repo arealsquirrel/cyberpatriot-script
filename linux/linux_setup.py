@@ -48,6 +48,6 @@ def setup_linux():
             run_command(["sudo", "cp", "good_files/linux/faillock", "/usr/share/pam-configs/faillock"])
             run_command(["sudo", "cp", "good_files/linux/faillock_reset", "/usr/share/pam-configs/faillock_reset"])
             run_command(["sudo", "cp", "good_files/linux/faillock_notify", "/usr/share/pam-configs/faillock_notify"])
-            run_command(["sudo", "pam-auth-update"])
+            # run_command(["sudo", "pam-auth-update"])
 
 setup_linux()

@@ -11,5 +11,5 @@ def run_command(command):
         process.wait()
 
         if process.returncode != 0:
-            file.write(f"[!] Command failed with return code {process.returncode}\n")
+            file.write(f"[!] Command failed with return code {process.returncode} {command}\n")
             print(f"[!] Command failed with return code {process.returncode}")
