@@ -37,11 +37,11 @@ def setup_linux():
             run_command(["sudo", "sed", "-i", "'/SYSLOG_SU_ENAB/c\SYSLOG_SU_ENAB YES'", "/etc/login.defs"])
             run_command(["sudo", "sed", "-i", "'/SYSLOG_SG_ENAB/c\SYSLOG_SG_ENAB YES'", "/etc/login.defs"])
 
-            run_command("passwd", "-l", "root")
-            run_command("chown", "root:root", "/etc/passwd")
-            run_command("chmod", "root:root", "/etc/shadow")
-            run_command("touch", "/etc/security/opasswd")
-            run_command("chmod", "root:root", "/etc/security/opasswd")
+            run_command(["sudo", "passwd", "-l", "root"])
+            run_command(["sudo", "chown", "root:root", "/etc/passwd"])
+            run_command(["sudo", "chmod", "root:root", "/etc/shadow"])
+            run_command(["sudo", "touch", "/etc/security/opasswd"])
+            run_command(["sudo", "chmod", "root:root", "/etc/security/opasswd"])
             
         
         if "n" not in input("adding lockout policy"):
