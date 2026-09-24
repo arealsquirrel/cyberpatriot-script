@@ -50,6 +50,8 @@ import getpass
 import pwd
 import re
 import subprocess
+import requests
+from bs4 import BeautifulSoup
 import sys
 from dataclasses import dataclass, field
 
@@ -73,6 +75,9 @@ class AuthorizedAccounts:
     @property
     def all_authorized(self):
         return set(self.admins) | set(self.users)
+
+    def get_password(self):
+        return you_password
 
 
 def fetch_html(url: str) -> str:
@@ -174,114 +179,38 @@ def get_human_system_users(min_uid: int = 1000, max_uid: int = 60000) -> list:
 # Actions
 # --------------------------------------------------------------------------
 
-def run(cmd, apply_changes: bool):
-    printable = " ".join(cmd)
-    if apply_changes:
-        print(f"  $ {printable}")
-        subprocess.run(cmd, check=True)
-    else:
-        print(f"  [dry-run] would run: {printable}")
-
-
-def delete_unauthorized_users(system_users, authorized, apply_changes, keep_home, protect):
-    to_delete = [u for u in system_users if u not in authorized and u not in protect]
-    if not to_delete:
-        print("No unauthorized accounts found.")
-        return
-    print(f"Unauthorized accounts to delete: {', '.join(to_delete)}")
-    for user in to_delete:
-        cmd = ["userdel"]
-        if not keep_home:
-            cmd.append("-r")
-        cmd.append(user)
-        run(cmd, apply_changes)
-
-
-def set_passwords(authorized_present, password, apply_changes):
-    if not password:
-        print("Skipping password sync — no '(you)' password was found.")
-        return
-    print(f"Setting password for: {', '.join(sorted(authorized_present))}")
-    if apply_changes:
-        payload = "\n".join(f"{u}:{password}" for u in authorized_present) + "\n"
-        subprocess.run(["chpasswd"], input=payload, text=True, check=True)
-    else:
-        for u in sorted(authorized_present):
-            print(f"  [dry-run] would run: echo '{u}:********' | chpasswd")
-
-
-def ensure_sudo_access(you_user, apply_changes):
-    if not you_user:
-        return
-    # 'sudo' is the standard admin group on Debian/Ubuntu/Mint.
-    print(f"Ensuring '{you_user}' has sudo rights (sudo auth uses their own password).")
-    run(["usermod", "-aG", "sudo", you_user], apply_changes)
-
-SUDO_GROUP_CANDIDATES = ("sudo", "admin", "wheel")
- 
- 
-def get_sudo_group_name() -> str:
-    """Return whichever admin group actually exists on this system."""
-    for name in SUDO_GROUP_CANDIDATES:
-        try:
-            grp.getgrnam(name)
-            return name
-        except KeyError:
-            continue
-    # Default assumption for Debian/Ubuntu/Mint if none exist yet.
-    return "sudo"
- 
-def get_group_members(group_name: str) -> set:
-    try:
-        return set(grp.getgrnam(group_name).gr_mem)
-    except KeyError:
-        return set()
- 
-def reconcile_sudo_access(admin_users, non_admin_users, apply_changes):
-    """
-    Make sudo-group membership match the authorized administrators list
-    exactly: every authorized admin who still exists on the system gets
-    added, and anyone else currently in the group — including authorized
-    *users* who aren't admins — gets removed.
-    """
-    group_name = get_sudo_group_name()
-    current_members = get_group_members(group_name)
- 
-    target_admins = set(admin_users)
-    to_add = sorted(target_admins - current_members)
-    to_remove = sorted(current_members - target_admins)
- 
-    if to_add:
-        print(f"Granting '{group_name}' group membership to: {', '.join(to_add)}")
-        for user in to_add:
-            run(["usermod", "-aG", group_name, user], apply_changes)
-    else:
-        print(f"All authorized administrators already have '{group_name}' access.")
- 
-    if to_remove:
-        print(f"Revoking '{group_name}' group membership from: {', '.join(to_remove)}")
-        for user in to_remove:
-            run(["gpasswd", "-d", user, group_name], apply_changes)
-    else:
-        print(f"No non-administrator accounts currently hold '{group_name}' access.")
-
-
 def authorized_admins_users(context):
     accounts = parse_readme(context[0])
     system_users = get_human_system_users()
     authorized = accounts.all_authorized
 
-    # context.you_user = accounts.you_user
-    # context.you_password = accounts.you_password
-
     print(accounts)
     print(system_users)
     print(authorized)
 
-    # delete_unauthorized_users(system_users, authorized, args.apply, args.keep_home, protect)
-    #remaining = [u for u in system_users if u in authorized]
-    #set_passwords(remaining, accounts.you_password, args.apply)
-    #ensure_sudo_access(accounts.you_user, args.apply)
-    #admin_present = [u for u in system_users if u in accounts.admins]
-    #non_admin_present = [u for u in system_users if u in accounts.users]
-    #reconcile_sudo_access(admin_present, non_admin_present, args.apply)
+    # find all the hidden users and remove em
+
+    # revoke sudo from users
+    print("revoking sudo")
+    for user in accounts.users:
+        inputpchange = user + ":" + accounts.you_password
+        print(inputpchange)
+        # subprocess.run(["chpasswd", input := "".encode()])
+        # subprocess.run(["gpasswd", "-d", user, "sudo"])
+        # subprocess.run(["chage", "-M", 90, user])
+
+    print("adding sudo")
+
+
+if __name__ == '__main__':
+    url = "https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
+    response = requests.get(url)
+    if response.status_code != 200:
+        print("[x] invalid url!")
+        exit(1)
+    print("[!] url returned 200 (very good)")
+    soup = BeautifulSoup(response.text, "html.parser")
+    response = requests.get(url)
+    log_file = open("log.txt", "w")
+    context = [soup, log_file]
+    authorized_admins_users(context)
