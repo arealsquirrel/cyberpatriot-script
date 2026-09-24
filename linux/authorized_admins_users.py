@@ -197,7 +197,7 @@ def authorized_admins_users(context):
     for user in accounts.users:
         inputpchange = user + ":" + accounts.you_password
         print(inputpchange)
-        subprocess.run(["chpasswd", input := inputpchange.encode()])
+        # subprocess.run(["chpasswd", input := inputpchange.encode()])
         subprocess.run(["gpasswd", "-d", user, "sudo"])
         subprocess.run(["chage", "-M", 90, user])
 
