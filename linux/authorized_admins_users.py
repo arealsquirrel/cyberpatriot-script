@@ -195,19 +195,11 @@ def authorized_admins_users(context):
     # revoke sudo from users
     print("revoking sudo")
     for user in accounts.users:
-        inputpchange = user + ":" + accounts.you_password
+        inputpchange = f"{user}:{accounts.you_password}"
         print(inputpchange)
-        # subprocess.run(["chpasswd", input := inputpchange.encode()])
+        subprocess.run(["chpasswd"], input=inputpchange)
         subprocess.run(["gpasswd", "-d", user, "sudo"])
         subprocess.run(["chage", "-M", "90", user])
-
-    for user in pwd.getpwall():
-        if user.pw_uid < 1000:
-            print(f"{user.pw_name} (uid={user.pw_uid})")
-            subprocess.run(["deluser", "--remove-home", user.pw_name])
-
-    print("adding sudo")
-
 
 if __name__ == '__main__':
     url = "https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
