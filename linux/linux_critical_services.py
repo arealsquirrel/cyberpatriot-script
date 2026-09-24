@@ -59,6 +59,15 @@ if __name__ == "__main__":
         exit(1)
 
     if "vsftpd" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_vsftpd.sh"], check=True)
+    if "ssh" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_ssh.sh"], check=True)
+    if "cups" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_cups.sh"], check=True)
+    if "dns" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_dns.sh"], check=True)
+    if "apache" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_apache.sh"], check=True)
+    if "http" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_http.sh"], check=True)
+    if "mysql" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_mysql.sh"], check=True)
+    if "samba" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_samba.sh"], check=True)
+    if "smtp" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_smtp.sh"], check=True)
+    if "telnet" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_telnet.sh"], check=True)
 
     # read the file systemctl_services.txt to get the list of services to disable
     with open("linux/templates/systemctl_blacklist", "r", encoding="utf-8") as f:

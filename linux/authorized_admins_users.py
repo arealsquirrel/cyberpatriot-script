@@ -211,6 +211,17 @@ def authorized_admins_users(context):
         subprocess.run(["gpasswd", "-a", user, "lpadmin"])
         subprocess.run(["gpasswd", "-a", user, "sambashare"])
 
+    with open('/etc/passwd', 'r') as f:
+        for line in f:
+            parts = line.strip().split(':')
+            username = parts[0]
+            uid = int(parts[2])
+            if uid < 1000:
+                if "y" in input(f"do ya wanna delete {username} (y/n): "):
+                    print(f"{username} (UID: {uid})")
+                    subprocess.run(["userdel", "--remove-home", username])
+
+
 if __name__ == '__main__':
     url = "https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
     response = requests.get(url)
