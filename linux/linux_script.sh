@@ -2,7 +2,7 @@
 
 apt-get update
 apt-get upgrade -y
-apt-get fill-upgrade -y
+apt-get full-upgrade -y
 apt-get dist-upgrade -y
 
 apt install -y unattended-upgrades
@@ -23,3 +23,5 @@ chmod +x linux/linux_ufw_default.sh
 
 python3 linux/linux_apt_purge.py
 python3 linux/linux_critical_services.py
+
+echo "scripts are done"

@@ -9,7 +9,7 @@ replace_command() {
     printf "\n$NEW_LINE" >> "$filename"
 }
 
-cp /etc/sysctl.conf /backups/sysctl.conf.bak
+cp /etc/sysctl.conf backups/sysctl.conf.bak
 
 replace_command "net.ipv4.conf.all.rp_filter" "net.ipv4.conf.all.rp_filter = 1" /etc/sysctl.conf
 replace_command "net.ipv4.conf.default.rp_filter" "net.ipv4.conf.default.rp_filter = 1" /etc/sysctl.conf

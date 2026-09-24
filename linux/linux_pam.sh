@@ -12,10 +12,10 @@ replace_command() {
 apt-get install libpam-cracklib
 
 # make backups of files we are going to edit
-cp linux/templates/common-password /etc/pam.d/common-password
-cp linux/templates/common-auth /etc/pam.d/common-auth
-cp linux/templates/login.defs /etc/login.defs
-cp linux/templates/pwquality.conf /etc/security/pwquality.conf
+cp backups/common-password /etc/pam.d/common-password
+cp backups/common-auth /etc/pam.d/common-auth
+cp backups/login.defs /etc/login.defs
+cp backups/pwquality.conf /etc/security/pwquality.conf
 
 echo 'auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800' >> /etc/pam.d/common-auth
 sed -i 's/nullok//g' /etc/pam.d/common-auth
