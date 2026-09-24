@@ -10,10 +10,11 @@ cp linux/templates/pwquality.conf /etc/security/pwquality.conf
 
 echo 'auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800' >> /etc/pam.d/common-auth
 sed -i 's/nullok//g' /etc/pam.d/common-auth
-sed -i 's/\(pam_unix\.so.*\)$/\1 remember=5 minlen=8/' /etc/pam.d/common-password
+sed -i 's/\(pam_unix\.so.*\)$/\1 remember=5 minlen=12/' /etc/pam.d/common-password
 sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1/' /etc/pam.d/common-password
-sed -i 's/# minlen = 8/minlen = 12/' /etc/security/pwquality.conf
-sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
+
+# sed -i 's/# minlen = 8/minlen = 12/' /etc/security/pwquality.conf
+# sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
 
 # set good login diffs
 sed -i '/PASS_MIN_DAYS/c\PASS_MIN_DAYS 7' /etc/login.defs
