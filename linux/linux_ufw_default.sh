@@ -9,3 +9,5 @@ ufw default allow outgoing
 ufw allow ssh
 ufw allow http
 ufw allow https
+
+ufw deny 1337

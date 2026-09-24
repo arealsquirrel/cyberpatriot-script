@@ -199,7 +199,17 @@ def authorized_admins_users(context):
         print(inputpchange)
         subprocess.run(["chpasswd"], input=inputpchange.encode())
         subprocess.run(["gpasswd", "-d", user, "sudo"])
+        subprocess.run(["gpasswd", "-d", user, "adm"])
+        subprocess.run(["gpasswd", "-d", user, "lpadmin"])
+        subprocess.run(["gpasswd", "-d", user, "sambashare"])
         subprocess.run(["chage", "-M", "90", user])
+
+    for user in accounts.admins:
+        print(f"giving admin to {user}")
+        subprocess.run(["gpasswd", "-a", user, "sudo"])
+        subprocess.run(["gpasswd", "-a", user, "adm"])
+        subprocess.run(["gpasswd", "-a", user, "lpadmin"])
+        subprocess.run(["gpasswd", "-a", user, "sambashare"])
 
 if __name__ == '__main__':
     url = "https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
