@@ -17,11 +17,10 @@ cp backups/common-auth /etc/pam.d/common-auth
 cp backups/login.defs /etc/login.defs
 cp backups/pwquality.conf /etc/security/pwquality.conf
 
-echo 'auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800' >> /etc/pam.d/common-auth
 sed -i 's/nullok//g' /etc/pam.d/common-auth
 sed -i 's/\(pam_unix\.so.*\)$/\1 remember=5 minlen=12/' /etc/pam.d/common-password
-sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1/' /etc/pam.d/common-password
 
+# sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1/' /etc/pam.d/common-password
 # sed -i 's/# minlen = 8/minlen = 12/' /etc/security/pwquality.conf
 # sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
 
@@ -34,8 +33,7 @@ replace_command "SYSLOG_SU_ENAB" "SYSLOG_SU_ENAB YES" /etc/login.defs
 replace_command "SYSLOG_SG_ENAB" "SYSLOG_SG_ENAB YES" /etc/login.defs
 
 # make the pam faillock
-cp linux/templates/faillock /usr/share/pam-configs/faillock
-cp linux/templates/faillock_reset /usr/share/pam-configs/faillock_reset
-cp linux/templates/faillock_notify /usr/share/pam-configs/faillock_notify
-
-pam-auth-update
+# cp linux/templates/faillock /usr/share/pam-configs/faillock
+# cp linux/templates/faillock_reset /usr/share/pam-configs/faillock_reset
+# cp linux/templates/faillock_notify /usr/share/pam-configs/faillock_notify
+# pam-auth-update
