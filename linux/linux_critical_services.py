@@ -44,8 +44,6 @@ def get_running_services():
             
     return services
 
-# clanker slop ends
-
 if __name__ == "__main__":
     critical_services = []
     with open("script.conf", "r", encoding="utf-8") as f:
@@ -65,4 +63,17 @@ if __name__ == "__main__":
     else:
         subprocess.run(['apt-get', 'purge', '-y', "vsftpd"], check=True)
 
-    print(get_running_services())
+    services = get_running_services()
+    for service in services:
+        if "squid" not in critical_services:
+            subprocess.run(['systemctl', 'disable', '--now', "squid"], check=True)
+
+        if "nginx" not in critical_services:
+            subprocess.run(['systemctl', 'disable', '--now', "nginx"], check=True)
+
+        if "cups" not in critical_services:
+            subprocess.run(['systemctl', 'disable', '--now', "cups"], check=True)
+
+        if "ssh" not in critical_services:
+            subprocess.run(['systemctl', 'disable', '--now', "ssh"], check=True)
+

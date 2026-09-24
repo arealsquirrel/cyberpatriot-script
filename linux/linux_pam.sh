@@ -1,5 +1,14 @@
 #/bin/bash
 
+replace_command() {
+    local PATTERN="$1"
+    local NEW_LINE="$2"
+    local filename="$3"
+  grep -q "$PATTERN" "$filename" && \
+    sed -i "/$PATTERN/s/.*/$NEW_LINE/" "$filename" || \
+    printf "\n$NEW_LINE" >> "$filename"
+}
+
 apt-get install libpam-cracklib
 
 # make backups of files we are going to edit
@@ -17,12 +26,12 @@ sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1
 # sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
 
 # set good login diffs
-sed -i '/PASS_MIN_DAYS/c\PASS_MIN_DAYS 7' /etc/login.defs
-sed -i '/PASS_MAX_DAYS/c\PASS_MAX_DAYS 90' /etc/login.defs
-sed -i '/PASS_WARN_AGE/c\PASS_WARN_AGE 14' /etc/login.defs
-sed -i '/FAILLOG_ENAB/c\FAILLOG_ENAB YES' /etc/login.defs
-sed -i '/SYSLOG_SU_ENAB/c\SYSLOG_SU_ENAB YES' /etc/login.defs
-sed -i '/SYSLOG_SG_ENAB/c\SYSLOG_SG_ENAB YES' /etc/login.defs
+replace_command "PASS_MIN_DAYS" "PASS_MIN_DAYS 7" /etc/login.defs
+replace_command "PASS_MAX_DAYS" "PASS_MAX_DAYS 90" /etc/login.defs
+replace_command "PASS_WARN_AGE" "PASS_WARN_AGE 14" /etc/login.defs
+replace_command "FAILLOG_ENAB" "FAILLOG_ENAB YES" /etc/login.defs
+replace_command "SYSLOG_SU_ENAB" "SYSLOG_SU_ENAB YES" /etc/login.defs
+replace_command "SYSLOG_SG_ENAB" "SYSLOG_SG_ENAB YES" /etc/login.defs
 
 # make the pam faillock
 cp linux/templates/faillock /usr/share/pam-configs/faillock
