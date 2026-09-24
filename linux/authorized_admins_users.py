@@ -223,7 +223,7 @@ def authorized_admins_users(context):
 
 
 if __name__ == '__main__':
-    url = "https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
+    url = input("gimme the read me url: ") #https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
     response = requests.get(url)
     if response.status_code != 200:
         print("[x] invalid url!")
