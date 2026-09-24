@@ -33,7 +33,7 @@ replace_command "SYSLOG_SU_ENAB" "SYSLOG_SU_ENAB YES" /etc/login.defs
 replace_command "SYSLOG_SG_ENAB" "SYSLOG_SG_ENAB YES" /etc/login.defs
 
 # make the pam faillock
-# cp linux/templates/faillock /usr/share/pam-configs/faillock
-# cp linux/templates/faillock_reset /usr/share/pam-configs/faillock_reset
-# cp linux/templates/faillock_notify /usr/share/pam-configs/faillock_notify
-# pam-auth-update
+cp linux/templates/faillock /usr/share/pam-configs/faillock
+cp linux/templates/faillock_reset /usr/share/pam-configs/faillock_reset
+cp linux/templates/faillock_notify /usr/share/pam-configs/faillock_notify
+pam-auth-update
