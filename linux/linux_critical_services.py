@@ -63,17 +63,16 @@ if __name__ == "__main__":
     else:
         subprocess.run(['apt-get', 'purge', '-y', "vsftpd"], check=True)
 
-    # services = get_running_services()
-    
-    if "squid" not in critical_services:
-        subprocess.run(['systemctl', 'disable', '--now', "squid"], check=True)
+    # read the file systemctl_services.txt to get the list of services to disable
+    with open("linux/templates/systemctl_blacklist", "r", encoding="utf-8") as f:
+        for line in f:
+            service = line.strip()
+            if service and service not in critical_services:
+                print("PURGING SERVICE: " + service)
+                subprocess.run(['systemctl', 'disable', '--now', service], check=True)
 
-    if "nginx" not in critical_services:
-        subprocess.run(['systemctl', 'disable', '--now', "nginx"], check=True)
-
-    if "cups" not in critical_services:
-        subprocess.run(['systemctl', 'disable', '--now', "cups"], check=True)
-
-    if "ssh" not in critical_services:
-        subprocess.run(['systemctl', 'disable', '--now', "ssh"], check=True)
+    # if "squid" not in critical_services: subprocess.run(['systemctl', 'disable', '--now', "squid"], check=True)
+    # if "nginx" not in critical_services: subprocess.run(['systemctl', 'disable', '--now', "nginx"], check=True)
+    # if "cups" not in critical_services: subprocess.run(['systemctl', 'disable', '--now', "cups"], check=True)
+    # if "ssh" not in critical_services: subprocess.run(['systemctl', 'disable', '--now', "ssh"], check=True)
 
