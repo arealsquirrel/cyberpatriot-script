@@ -199,7 +199,7 @@ def authorized_admins_users(context):
         print(inputpchange)
         # subprocess.run(["chpasswd", input := inputpchange.encode()])
         subprocess.run(["gpasswd", "-d", user, "sudo"])
-        subprocess.run(["chage", "-M", 90, user])
+        subprocess.run(["chage", "-M", "90", user])
 
     for user in pwd.getpwall():
         if user.pw_uid < 1000:
