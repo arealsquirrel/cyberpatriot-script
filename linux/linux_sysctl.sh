@@ -5,7 +5,7 @@ replace_command() {
     local NEW_LINE="$2"
     local filename="$3"
   grep -q "$PATTERN" "$filename" && \
-    sed -i "s/$PATTERN.*/$NEW_LINE/" "$filename" || \
+    sed -i "/$PATTERN/s/.*/$NEW_LINE/" "$filename" || \
     printf "\n$NEW_LINE" >> "$filename"
 }
 
