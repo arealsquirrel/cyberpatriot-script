@@ -32,12 +32,12 @@ echo 'exit 0' >> /etc/rc.local
 
 # light dm
 chmod 644 /etc/lightdm/lightdm.conf
-sed -i 's/greeter-hide-users=.*/greeter-hide-users=true/' /etc/lightdm/lightdm.conf
-sed -i 's/greeter-allow-guest=.*/greeter-allow-guest=false/' /etc/lightdm/lightdm.conf
-sed -i 's/greeter-show-manual-login=.*/greeter-show-manual-login=true/' /etc/lightdm/lightdm.conf
-sed -i 's/allow-guest=.*/allow-guest=false/' /etc/lightdm/lightdm.conf
-sed -i 's/autologin-guest=.*/autologin-guest=false/' /etc/lightdm/lightdm.conf
-sed -i 's/autologin-user=.*/autologin-user=NONE/' /etc/lightdm/lightdm.conf
+sed -i 's/greeter-hide-users.*/greeter-hide-users=true/' /etc/lightdm/lightdm.conf
+sed -i 's/greeter-allow-guest.*/greeter-allow-guest=false/' /etc/lightdm/lightdm.conf
+sed -i 's/greeter-show-manual-login.*/greeter-show-manual-login=true/' /etc/lightdm/lightdm.conf
+sed -i 's/allow-guest.*/allow-guest=false/' /etc/lightdm/lightdm.conf
+sed -i 's/autologin-guest.*/autologin-guest=false/' /etc/lightdm/lightdm.conf
+sed -i 's/autologin-user.*/autologin-user=NONE/' /etc/lightdm/lightdm.conf
 
 chmod +x linux/linux_pam.sh
 chmod +x linux/linux_sysctl.sh
@@ -53,18 +53,5 @@ python3 linux/linux_critical_services.py
 apt-get autoremove -y -qq
 apt-get autoclean -y -qq
 apt-get clean -y -qq
-
-
-clear
-if [[ $(grep root /etc/passwd | wc -l) -gt 1 ]]
-then
-	grep root /etc/passwd | wc -l
-	echo -e "UID 0 is not correctly set to root. Please fix.\nPress enter to continue..."
-	read waiting
-else
-	printTime "UID 0 is correctly set to root."
-fi
-
-
 
 echo "scripts are done"

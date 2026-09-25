@@ -191,10 +191,18 @@ def authorized_admins_users(context):
     print(authorized)
 
     # find all the hidden users and remove em
+    for sys_user in system_users:
+        if sys_user not in authorized:
+            print(f"random person - im going to delete it, {sys_user}")
+            subprocess.run(["userdel", "--remove-home", username])
 
     # revoke sudo from users
     print("revoking sudo")
     for user in accounts.users:
+        if user not in authorized:
+            print(f"{user} does not exist, adding this user")
+            subprocess.run(["useradd", "-m", user], input=inputpchange.encode())
+
         inputpchange = f"{user}:{accounts.you_password}"
         print(inputpchange)
         subprocess.run(["chpasswd"], input=inputpchange.encode())
@@ -211,12 +219,15 @@ def authorized_admins_users(context):
         subprocess.run(["gpasswd", "-a", user, "lpadmin"])
         subprocess.run(["gpasswd", "-a", user, "sambashare"])
 
+    # typical_groups = ["root", "daemon", "bin", "sys", "adm", "tty", "disk", "lp", "mail", "news", "uucp", "man", "proxy", "kmem", "dialout", "fax", "voice", "cdrom", "floppy", "tape", "sudo", "audio", "dip", "www-data", "backup", "operator", "list", "irc", "src", "gnats", "shadow", "utmp", "video", "sasl", "plugdev", "staff", "games", "users"]
+    typical_users = ["root", "daemon", "bin", "sys", "sync", "games", "man", "lp", "mail", "news", "uucp", "proxy", "www-data", "backup", "list", "irc", "systemd-network", "systemd-resolve", "messagebus", "syslog", "uuidd", "lightdm", "avahi", "colord", "cups", "dnsmasq", "geoclue", "ntp", "polkitd", "saned", "speech-dispatcher", "statd", "systemd-coredump", "systemd-timesync", "tcpdump", "usbmux"]
+
     with open('/etc/passwd', 'r') as f:
         for line in f:
             parts = line.strip().split(':')
             username = parts[0]
             uid = int(parts[2])
-            if uid < 1000:
+            if uid < 1000 and username not in typical_users:
                 if "y" in input(f"do ya wanna delete {username} (y/n): "):
                     print(f"{username} (UID: {uid})")
                     subprocess.run(["userdel", "--remove-home", username])

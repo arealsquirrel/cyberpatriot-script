@@ -58,21 +58,21 @@ if __name__ == "__main__":
         print("No critical services found in script.conf")
         exit(1)
 
-    if "vsftpd" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_vsftpd.sh"], check=True)
-    if "ssh" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_ssh.sh"], check=True)
-    if "cups" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_cups.sh"], check=True)
-    if "dns" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_dns.sh"], check=True)
-    if "apache" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_apache.sh"], check=True)
-    if "http" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_http.sh"], check=True)
-    if "mysql" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_mysql.sh"], check=True)
-    if "samba" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_samba.sh"], check=True)
-    if "smtp" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_smtp.sh"], check=True)
-    if "telnet" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_telnet.sh"], check=True)
-
     # read the file systemctl_services.txt to get the list of services to disable
     with open("linux/templates/systemctl_blacklist", "r", encoding="utf-8") as f:
         for line in f:
             service = line.strip()
-            if service and service not in critical_services:
+            if service not in critical_services:
                 print("PURGING SERVICE: " + service)
-                subprocess.run(['systemctl', 'disable', '--now', service], check=True)
+                subprocess.run(['systemctl', 'disable', '--now', service])
+
+    if "vsftpd" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_vsftpd.sh"])
+    if "ssh" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_ssh.sh"])
+    if "cups" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_cups.sh"])
+    if "dns" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_dns.sh"])
+    if "apache" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_apache.sh"])
+    if "http" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_http.sh"])
+    if "mysql" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_mysql.sh"])
+    if "samba" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_samba.sh"])
+    if "smtp" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_smtp.sh"])
+    if "telnet" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_telnet.sh"])

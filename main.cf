@@ -1,0 +1,9 @@
+# SMTP Mail Server Configuration Settings
+SMTP_HOST=://example.com
+SMTP_PORT=587
+SMTP_USE_SSL=false
+SMTP_USE_STARTTLS=true
+SMTP_USERNAME=your_email@example.com
+SMTP_PASSWORD=your_secure_password
+MAIL_FROM_ADDRESS=no-reply@example.com
+MAIL_FROM_NAME=System Notification

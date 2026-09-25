@@ -42,7 +42,7 @@ if __name__ == "__main__":
             print(pkg)
             if pkg in installed_pkgs:
                 print(f"Package '{pkg}' is installed and will be purged.")
-                subprocess.run(['apt-get', 'purge', '-y', pkg], check=True)
+                subprocess.run(['apt-get', 'purge', '-y', pkg])
             else:
                 print(f"Package '{pkg}' is not installed.")
 
