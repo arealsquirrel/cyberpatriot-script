@@ -231,7 +231,8 @@ def authorized_admins_users(context):
             if uid < 1000 and username not in typical_users:
                 if "y" in input(f"do ya wanna delete {username} (y/n): "):
                     print(f"{username} (UID: {uid})")
-                    subprocess.run(["userdel", "--remove-home", username])
+                    subprocess.run(["deluser", "--remove-home", username])
+                    subprocess.run(["userdel", "-r", username])
 
 
 if __name__ == '__main__':

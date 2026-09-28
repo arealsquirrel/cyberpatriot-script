@@ -53,6 +53,8 @@ chmod +x linux/linux_ufw_default.sh
 
 python3 linux/linux_apt_purge.py
 python3 linux/linux_critical_services.py
+python3 linux/linux_delete_suspicious.py
+python3 linux/autherized_admins_users.py
 
 apt-get autoremove -y -qq
 apt-get autoclean -y -qq
