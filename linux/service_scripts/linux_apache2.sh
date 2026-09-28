@@ -13,6 +13,4 @@ apt-get install apache2 -y
 chown -R root:root /etc/apache2
 chown -R root:root /etc/apache
 
-
-
 systemctl start apache2

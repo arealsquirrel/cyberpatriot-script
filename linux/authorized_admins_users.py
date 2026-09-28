@@ -222,6 +222,7 @@ def authorized_admins_users(context):
     # typical_groups = ["root", "daemon", "bin", "sys", "adm", "tty", "disk", "lp", "mail", "news", "uucp", "man", "proxy", "kmem", "dialout", "fax", "voice", "cdrom", "floppy", "tape", "sudo", "audio", "dip", "www-data", "backup", "operator", "list", "irc", "src", "gnats", "shadow", "utmp", "video", "sasl", "plugdev", "staff", "games", "users"]
     typical_users = ["root", "daemon", "bin", "sys", "sync", "games", "man", "lp", "mail", "news", "uucp", "proxy", "www-data", "backup", "list", "irc", "systemd-network", "systemd-resolve", "messagebus", "syslog", "uuidd", "lightdm", "avahi", "colord", "cups", "dnsmasq", "geoclue", "ntp", "polkitd", "saned", "speech-dispatcher", "statd", "systemd-coredump", "systemd-timesync", "tcpdump", "usbmux"]
 
+    print("------------ SEARCHING FOR WEIRD USERS ------------")
     with open('/etc/passwd', 'r') as f:
         for line in f:
             parts = line.strip().split(':')
@@ -234,6 +235,7 @@ def authorized_admins_users(context):
 
 
 if __name__ == '__main__':
+    print("------------ SEARCHING FOR AUTHERIZED ADMINS AND USERS ------------")
     url = input("gimme the read me url: ") #https://www.uscyberpatriot.org/competition/scenario/390849r4g8oab/"
     response = requests.get(url)
     if response.status_code != 200:

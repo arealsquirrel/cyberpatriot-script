@@ -45,6 +45,7 @@ def get_running_services():
     return services
 
 if __name__ == "__main__":
+    print("------------- PURGING SYSTEMCTL -------------")
     critical_services = []
     with open("script.conf", "r", encoding="utf-8") as f:
         for line in f:
@@ -63,7 +64,7 @@ if __name__ == "__main__":
         for line in f:
             service = line.strip()
             if service not in critical_services:
-                print("PURGING SERVICE: " + service)
+                print(" ------------- PURGING SERVICE: " + service)
                 subprocess.run(['systemctl', 'disable', '--now', service])
 
     if "vsftpd" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_vsftpd.sh"])

@@ -9,6 +9,8 @@ replace_command() {
     printf "\n$NEW_LINE" >> "$filename"
 }
 
+
+echo "------------ INSTALLING CRACKLIB ------------"
 apt-get install libpam-cracklib
 
 # make backups of files we are going to edit
@@ -17,6 +19,7 @@ cp backups/common-auth /etc/pam.d/common-auth
 cp backups/login.defs /etc/login.defs
 cp backups/pwquality.conf /etc/security/pwquality.conf
 
+echo "------------ UPDATING PAM ------------"
 sed -i 's/nullok//g' /etc/pam.d/common-auth
 sed -i 's/\(pam_unix\.so.*\)$/\1 remember=5 minlen=12/' /etc/pam.d/common-password
 sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1/' /etc/pam.d/common-password
@@ -24,6 +27,8 @@ sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1
 # sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
 
 # set good login diffs
+
+echo "------------ CONFIGURING LOGIN DEFS (/etc/login.defs) ------------"
 replace_command "PASS_MIN_DAYS" "PASS_MIN_DAYS 7" /etc/login.defs
 replace_command "PASS_MAX_DAYS" "PASS_MAX_DAYS 90" /etc/login.defs
 replace_command "PASS_WARN_AGE" "PASS_WARN_AGE 14" /etc/login.defs

@@ -9,6 +9,8 @@ replace_command() {
     printf "\n$NEW_LINE" >> "$filename"
 }
 
+echo "------------ SECURING VSFTPD ------------"
+
 apt install vsftpd
 
 ufw allow ftp
@@ -38,5 +40,5 @@ replace_command "idle_session_timeout" "idle_session_timeout=300" vsftpd.conf
 replace_command "data_connection_timeout" "data_connection_timeout=60" vsftpd.conf
 
 # sudo vsftpd -olisten=NO /etc/vsftpd.conf
-# systemctl enable --now vsftpd
+systemctl enable --now vsftpd
 # sudo systemctl restart vsftpd

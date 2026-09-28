@@ -1,36 +1,40 @@
 #/bin/bash
 
+echo "------------ UNALIASING ALL ------------"
 unalias -a
+
+echo "------------ DISABELING ROOT ACCOUNT LOGIN ------------"
 usermod -L root
 
+echo "------------ DOING SYSTEM UPDATE ------------"
 apt-get update
 apt-get upgrade -y
 apt-get full-upgrade -y
 apt-get dist-upgrade -y
 
-apt install -y unattended-upgrades
-dpkg-reconfigure --priority=low unattended-upgrades
-
+echo "------------ LOCKING SENSITIVE FILES ------------"
 passwd -l root
 chown 640:640 /etc/passwd
 chown 644:644 /etc/shadow
 chown 644:644 /etc/security/opasswd
 chmod 640 .bash_history
-cp /etc/rc.local ~/Desktop/backups/
 
 # remove all scrips in bin
+echo "------------ REMOVING ALL SCRIPTS IN /BIN ------------"
 find /bin/ -name "*.sh" -type f -delete
 
 # disable IRQ balance
+
+echo "------------ DOING IRQ BALANCE ------------"
 cp /etc/default/irqbalance ~/Desktop/backups/
 echo > /etc/default/irqbalance
 echo -e "#Configuration for the irqbalance daemon\n\n#Should irqbalance be enabled?\nENABLED=\"0\"\n#Balance the IRQs only once?\nONESHOT=\"0\"" >> /etc/default/irqbalance
 
-# startup scripts
+echo "------------ DISABELING STARTUP SCRIPTS ------------"
 echo > /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
 
-# light dm
+echo "------------ SECURING LIGHT DM ------------"
 chmod 644 /etc/lightdm/lightdm.conf
 sed -i 's/greeter-hide-users.*/greeter-hide-users=true/' /etc/lightdm/lightdm.conf
 sed -i 's/greeter-allow-guest.*/greeter-allow-guest=false/' /etc/lightdm/lightdm.conf
