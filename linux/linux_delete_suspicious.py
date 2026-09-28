@@ -15,3 +15,14 @@ if __name__ == "__main__":
                     f.unlink()
                     print("Deleted.")
 
+    print("--------- SEARCHING FOR BAD SCRIPTS ---------")
+    extensions = [".py"]
+    for ext in extensions:
+        if not ext.startswith("."):
+            ext = "." + ext
+        folder = Path("/")
+        for f in list(folder.rglob("*" + ext)):
+            if f.is_file() and input(f"Delete {f}? (y/n): ").strip().lower() == "y":
+                f.unlink()
+                print("Deleted.")
+
