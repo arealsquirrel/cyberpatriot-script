@@ -40,10 +40,6 @@ if __name__ == "__main__":
     with open("linux/templates/apt_blacklist", "r", encoding="utf-8") as file:
         blacklist = [line.strip() for line in file if line.strip()]
         for pkg in blacklist:
-            print(pkg)
-            if pkg in installed_pkgs:
+            if pkg in installed_pkgs and "y" in input(f"delete package {pkg} (y/n)? "):
                 print(f"Package '{pkg}' is installed and will be purged.")
                 subprocess.run(['apt-get', 'purge', '-y', pkg])
-            else:
-                print(f"Package '{pkg}' is not installed.")
-
