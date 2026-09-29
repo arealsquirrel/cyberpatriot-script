@@ -35,6 +35,7 @@ def get_installed_packages():
 if __name__ == "__main__":
     installed_pkgs = get_installed_packages()
     print(f"Total packages installed: {len(installed_pkgs)}")
+    print(installed_pkgs)
 
     with open("linux/templates/apt_blacklist", "r", encoding="utf-8") as file:
         blacklist = [line.strip() for line in file if line.strip()]

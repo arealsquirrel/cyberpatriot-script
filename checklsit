@@ -1,3 +1,6 @@
 check /etc/sudoers
 
 getting pam in order
+
+check for weird file premissions
+

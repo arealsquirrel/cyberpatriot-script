@@ -48,6 +48,6 @@ ssh-keygen -t rsa
 
 ufw allow 22/tcp
 
-systemctl restart sshd
+sudo sshd -t && systemctl restart ssh
 
 

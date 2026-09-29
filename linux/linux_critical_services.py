@@ -67,8 +67,14 @@ if __name__ == "__main__":
                 print(" ------------- PURGING SERVICE: " + service)
                 subprocess.run(['systemctl', 'disable', '--now', service])
 
-    if "vsftpd" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_vsftpd.sh"])
-    if "ssh" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_ssh.sh"])
+    if "vsftpd" in critical_services:
+        subprocess.run(["bash", "linux/service_scripts/linux_vsftpd.sh"]) 
+    else: subprocess.run(["apt", "purge", "vsftpd"])
+
+    if "ssh" in critical_services: 
+        subprocess.run(["bash", "linux/service_scripts/linux_ssh.sh"])
+    else: subprocess.run(["apt", "purge", "openssh-server"])
+
     if "cups" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_cups.sh"])
     if "dns" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_dns.sh"])
     if "apache" in critical_services: subprocess.run(["bash", "linux/service_scripts/linux_apache.sh"])

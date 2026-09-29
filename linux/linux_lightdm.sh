@@ -19,3 +19,4 @@ replace_command "greeter-show-manual-login" "greeter-show-manual-login=true" /et
 replace_command "autologin-user" "autologin-user=$username" /etc/lightdm/lightdm.conf
 replace_command "autologin-guest" "autologin-guest=false" /etc/lightdm/lightdm.conf
 
+systemctl restart lightdm
