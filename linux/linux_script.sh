@@ -52,6 +52,19 @@ python3 linux/linux_apt_purge.py
 python3 linux/linux_critical_services.py
 python3 linux/linux_delete_suspicious.py
 python3 linux/authorized_admins_users.py
+python3 linux/linux_cronjobs.py
+
+echo "------------ RUNNING FINAL MALWARE CHECKS ------------"
+sudo apt install -y clamav
+sudo systemctl stop clamav-freshclam; sudo freshclam; sudo systemctl start clamab-freshclam
+sudo clamscan -r -i /home /root /tmp /var/tmp /opt /var/www
+
+sudo apt install -y rkhunter chkrootkit
+sudo rkhunter --update; sudo rkhunter --check -sk
+sudo chrootkit
+
+sudo apt install -y lynis
+sudo lynis audit system
 
 apt-get autoremove -y -qq
 apt-get autoclean -y -qq
