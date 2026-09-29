@@ -30,31 +30,28 @@ cp /etc/default/irqbalance ~/Desktop/backups/
 echo > /etc/default/irqbalance
 echo -e "#Configuration for the irqbalance daemon\n\n#Should irqbalance be enabled?\nENABLED=\"0\"\n#Balance the IRQs only once?\nONESHOT=\"0\"" >> /etc/default/irqbalance
 
-echo "------------ DISABELING STARTUP SCRIPTS ------------"
+echo "------------ ENABLING AUTO UPDATES ------------"
+apt install -y unattended-upgrades
+dpkg-reconfigure --priority=low unattended-upgrades
+
+echo "------------ DISABLING STARTUP SCRIPTS ------------"
 echo > /etc/rc.local
 echo 'exit 0' >> /etc/rc.local
-
-echo "------------ SECURING LIGHT DM ------------"
-chmod 644 /etc/lightdm/lightdm.conf
-sed -i 's/greeter-hide-users.*/greeter-hide-users=true/' /etc/lightdm/lightdm.conf
-sed -i 's/greeter-allow-guest.*/greeter-allow-guest=false/' /etc/lightdm/lightdm.conf
-sed -i 's/greeter-show-manual-login.*/greeter-show-manual-login=true/' /etc/lightdm/lightdm.conf
-sed -i 's/allow-guest.*/allow-guest=false/' /etc/lightdm/lightdm.conf
-sed -i 's/autologin-guest.*/autologin-guest=false/' /etc/lightdm/lightdm.conf
-sed -i 's/autologin-user.*/autologin-user=NONE/' /etc/lightdm/lightdm.conf
 
 chmod +x linux/linux_pam.sh
 chmod +x linux/linux_sysctl.sh
 chmod +x linux/linux_ufw_default.sh
+chmod +x linux/linux_lightdm.sh
 
 ./linux/linux_sysctl.sh
 ./linux/linux_ufw_default.sh
+./linux/linux_lightdm.sh
 ./linux/linux_pam.sh
 
 python3 linux/linux_apt_purge.py
 python3 linux/linux_critical_services.py
 python3 linux/linux_delete_suspicious.py
-python3 linux/autherized_admins_users.py
+python3 linux/authorized_admins_users.py
 
 apt-get autoremove -y -qq
 apt-get autoclean -y -qq

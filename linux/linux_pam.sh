@@ -9,9 +9,8 @@ replace_command() {
     printf "\n$NEW_LINE" >> "$filename"
 }
 
-
 echo "------------ INSTALLING CRACKLIB ------------"
-apt-get install libpam-cracklib
+apt-get install libpam-pwquality
 
 # make backups of files we are going to edit
 cp backups/common-password /etc/pam.d/common-password
@@ -20,11 +19,21 @@ cp backups/login.defs /etc/login.defs
 cp backups/pwquality.conf /etc/security/pwquality.conf
 
 echo "------------ UPDATING PAM ------------"
+
+replace_command "pam_unix.so" "password   [success=1 default=ignore]    pam_unix.so obscure use_authtok try_first_pass yescrypt remember=5 minlen=12" /etc/pam.d/common-password
+replace_command "pam_pwquality.so" "password  requisite   pam_pwquality.so retry=3 minlen=12 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1 difok=3 reject_username enforce_for_root" /etc/pam.d/common-password
+
+# nullok is never ok
 sed -i 's/nullok//g' /etc/pam.d/common-auth
-sed -i 's/\(pam_unix\.so.*\)$/\1 remember=5 minlen=12/' /etc/pam.d/common-password
-sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1/' /etc/pam.d/common-password
-# sed -i 's/# minlen = 8/minlen = 12/' /etc/security/pwquality.conf
-# sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
+
+# sed -i 's/\(pam_unix\.so.*\)$/\1 remember=5 minlen=12/' /etc/pam.d/common-password
+# sed -i 's/\(pam_cracklib\.so.*\)$/\1 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1/' /etc/pam.d/common-password
+sed -i 's/# minlen = 8/minlen = 12/' /etc/security/pwquality.conf
+sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
+
+for u in $(awk -F: '$3>=1000 && $3<65534 {print $1} /etc/passwd'); do
+  chage -M 90 -m 10 -W 7 "$u"; 
+done
 
 # set good login diffs
 
