@@ -31,9 +31,6 @@ sed -i 's/nullok//g' /etc/pam.d/common-auth
 sed -i 's/# minlen = 8/minlen = 12/' /etc/security/pwquality.conf
 sed -i 's/# maxrepeat = 3/maxrepeat = 3/' /etc/security/pwquality.conf
 
-for u in $(awk -F: '$3>=1000 && $3<65534 {print $1} /etc/passwd'); do
-  chage -M 90 -m 10 -W 7 "$u"; 
-done
 
 # set good login diffs
 
