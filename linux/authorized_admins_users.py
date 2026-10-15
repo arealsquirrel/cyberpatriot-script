@@ -214,6 +214,8 @@ def authorized_admins_users(context):
 
     for user in accounts.admins:
         print(f"giving admin to {user}")
+        inputpchange = f"{user}:{accounts.you_password}"
+        subprocess.run(["chpasswd"], input=inputpchange.encode())
         subprocess.run(["gpasswd", "-a", user, "sudo"])
         subprocess.run(["gpasswd", "-a", user, "adm"])
         subprocess.run(["gpasswd", "-a", user, "lpadmin"])
