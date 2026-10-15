@@ -194,7 +194,7 @@ def authorized_admins_users(context):
     for sys_user in system_users:
         if sys_user not in authorized:
             print(f"random person - im going to delete it, {sys_user}")
-            subprocess.run(["userdel", "--remove-home", username])
+            subprocess.run(["userdel", "-r", username])
 
     # revoke sudo from users
     print("revoking sudo")
